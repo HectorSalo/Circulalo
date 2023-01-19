@@ -1,10 +1,10 @@
-package com.skysam.hchirinos.circulalo.ui.dashboard
+package com.skysam.hchirinos.circulalo.ui.post
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class PostViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
