@@ -12,9 +12,8 @@
         android:title="@string/title_store" />
 
     <item
-        android:id="@+id/navigation_post"
-        android:icon="@drawable/ic_add_post_24"
-        android:title="@string/title_post" />
+        android:id="@+id/navigation_profil"
+        android:title="" />
 
     <item
         android:id="@+id/navigation_notifications"
