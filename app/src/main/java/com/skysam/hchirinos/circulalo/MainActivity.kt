@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -39,7 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        binding.floatingActionButton.setOnClickListener {
+        val itemProfile = navView.menu.getItem(4)
+        itemProfile.icon = ContextCompat.getDrawable(this, R.drawable.logo)
+        navView.itemIconTintList = null
+
+        binding.fab.setOnClickListener {
             if (Permission.checkPermission()) {
                 startActivity(Intent(this, PostActivity::class.java))
             } else {
