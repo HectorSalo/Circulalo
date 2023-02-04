@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "98927591238",
+    "project_id": "circulalo-mvp",
+    "storage_bucket": "circulalo-mvp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98927591238:android:6c06d293bc86469141af47",
+        "android_client_info": {
+          "package_name": "com.skysam.hchirinos.circulalo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98927591238-k2jetgjsfeovhpqdm1iiosgigs2505b9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClHspvxBT7dA5xFNIfdC0QbWQfKQjBEPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98927591238-k2jetgjsfeovhpqdm1iiosgigs2505b9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

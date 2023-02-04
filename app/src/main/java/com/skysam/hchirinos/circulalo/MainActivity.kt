@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.skysam.hchirinos.circulalo.common.Permission
 import com.skysam.hchirinos.circulalo.databinding.ActivityMainBinding
 import com.skysam.hchirinos.circulalo.ui.post.PostActivity
@@ -20,9 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
-            //goGallery()
+            startActivity(Intent(this, PostActivity::class.java))
         } else {
-            //Toast.makeText(, getString(R.string.txt_error_permiso_lectura), Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.error_permission_read), Snackbar.LENGTH_SHORT)
+                .setAnchorView(R.id.coordinator).show()
         }
     }
 
@@ -41,8 +44,14 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val itemProfile = navView.menu.getItem(4)
-        itemProfile.icon = ContextCompat.getDrawable(this, R.drawable.logo)
+        itemProfile.icon = ContextCompat.getDrawable(this, R.drawable.test)
         navView.itemIconTintList = null
+        /*Glide.with(this)
+            .load(R.drawable.test)
+            .centerCrop()
+            .circleCrop()
+            .placeholder(R.drawable.ic_profile_24)
+            .into(itemProfile.icon!!)*/
 
         binding.fab.setOnClickListener {
             if (Permission.checkPermission()) {
