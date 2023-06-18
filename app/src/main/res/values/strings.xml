@@ -25,12 +25,11 @@
     <string name="text_back">Regresar</string>
 
     <!-- Post -->
-    <string name="title_step_1">Paso 1 de 4: Datos del producto</string>
-    <string name="title_step_2">Paso 2 de 4: Asignar Categorías</string>
-    <string name="title_step_3">Paso 3 de 4: Datos de venta</string>
-    <string name="title_step_4">Último paso: Imágenes</string>
     <string name="text_name">Nombre</string>
     <string name="text_description_post">Descripción de la publicación</string>
+    <string name="title_price_unit">Precio unit.</string>
+    <string name="text_price_init">0,00</string>
+    <string name="text_quantity">Cantidad disponible</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
