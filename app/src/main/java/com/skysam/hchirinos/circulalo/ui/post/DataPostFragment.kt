@@ -105,6 +105,7 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage 
             return
         }
         binding.btnNext.isEnabled = true
+        Utils.close(binding.root)
     }
 
     private fun showImage(it: Intent) {
