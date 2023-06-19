@@ -14,5 +14,6 @@ data class Product(
  var datePosted: Date,
  var userOwner: String,
  var images: MutableList<String>,
+ var categories: MutableList<Category>,
  var isActive: Boolean
  )

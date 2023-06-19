@@ -24,6 +24,9 @@
     <string name="text_next">Siguiente</string>
     <string name="text_back">Regresar</string>
 
+    <!-- Errors -->
+    <string name="error_image_notfound">Imagen/archivo no encontrado.</string>
+
     <!-- Post -->
     <string name="text_name">Nombre</string>
     <string name="text_description_post">Descripción de la publicación</string>

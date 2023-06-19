@@ -14,7 +14,8 @@ import com.skysam.hchirinos.circulalo.dataClass.Category
  * Created by Hector Chirinos on 08/05/2023.
  */
 
-class CategoryAdapter(private val categories: MutableList<Category>): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val categories: MutableList<Category>, private val onClickCategory: OnClickCategory):
+ RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
  lateinit var context: Context
 
  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder {
@@ -28,6 +29,10 @@ class CategoryAdapter(private val categories: MutableList<Category>): RecyclerVi
   val item = categories[position]
   holder.category.text = item.name
   holder.checkbox.isChecked = item.selected
+  holder.checkbox.setOnCheckedChangeListener { _, isChecked ->
+   item.selected = isChecked
+   onClickCategory.categorySelected(item)
+  }
  }
 
  override fun getItemCount(): Int = categories.size

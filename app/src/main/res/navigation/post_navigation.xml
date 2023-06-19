@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.skysam.hchirinos.circulalo.ui.post.FirstFragment"
-        tools:layout="@layout/fragment_first">
+        android:name="com.skysam.hchirinos.circulalo.ui.post.DataPostFragment"
+        tools:layout="@layout/fragment_data_post">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
