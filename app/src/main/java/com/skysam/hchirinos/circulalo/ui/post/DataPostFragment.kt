@@ -18,9 +18,11 @@ import com.skysam.hchirinos.circulalo.R
 import com.skysam.hchirinos.circulalo.common.Utils
 import com.skysam.hchirinos.circulalo.dataClass.Category
 import com.skysam.hchirinos.circulalo.databinding.FragmentDataPostBinding
+import com.skysam.hchirinos.circulalo.ui.common.ExitDialog
+import com.skysam.hchirinos.circulalo.ui.common.OnClickExit
 import java.util.Locale
 
-class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage {
+class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage, OnClickExit {
 
     private var _binding: FragmentDataPostBinding? = null
     private val binding get() = _binding!!
@@ -59,9 +61,7 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage 
             setHasFixedSize(true)
             adapter = categoryAdapter
         }
-        for (i in 1..8) {
-            images.add(null)
-        }
+        images.add(null)
         imageAdapter = ImageAdapter(images, this)
         binding.rvImages.apply {
             setHasFixedSize(true)
@@ -75,7 +75,12 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage 
         binding.etDescription.doAfterTextChanged { enableButtonSave() }
         binding.etQuantity.doAfterTextChanged { enableButtonSave() }
 
-        binding.btnNext.setOnClickListener { findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment) }
+        binding.btnNext.setOnClickListener { findNavController().navigate(R.id.action_FirstFragment_to_postFragment) }
+        binding.btnBack.setOnClickListener {
+            val exitDialog = ExitDialog(this)
+            exitDialog.show(requireActivity().supportFragmentManager, tag)
+        }
+        binding.btnNext.isEnabled = true
 
     }
 
@@ -114,7 +119,11 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage 
 
         if (bitmap != null) {
             images[positionImage] = bitmap
+            if (images.size < 8) {
+                images.add(null)
+            }
             imageAdapter.notifyItemChanged(positionImage)
+            binding.rvImages.scrollToPosition(positionImage + 1)
         }
     }
 
@@ -128,10 +137,15 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage 
         enableButtonSave()
     }
 
-    override fun selectedImage(position: Int) {
+    override fun selectedImage(position: Int, remove: Boolean) {
         positionImage = position
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        requestIntentLauncher.launch(intent)
+        if (!remove) {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            requestIntentLauncher.launch(intent)
+        } else {
+            imageAdapter.notifyItemRemoved(position)
+            images.removeAt(position)
+        }
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -157,5 +171,9 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage 
             binding.etQuantity.setSelection(cadena.length)
             binding.etQuantity.addTextChangedListener(this)
         }
+    }
+
+    override fun onClickExit() {
+        requireActivity().finish()
     }
 }

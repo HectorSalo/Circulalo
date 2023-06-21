@@ -5,5 +5,5 @@ package com.skysam.hchirinos.circulalo.ui.post
  */
 
 interface OnClickImage {
- fun selectedImage(position: Int)
+ fun selectedImage(position: Int, remove: Boolean)
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.skysam.hchirinos.circulalo.R
@@ -34,7 +35,22 @@ class ImageAdapter(private val images: MutableList<Bitmap?>, private val onClick
    .error(R.drawable.ic_add_image_88)
    .into(holder.image)
 
-  holder.image.setOnClickListener { onClickImage.selectedImage(position) }
+  holder.image.setOnClickListener {
+   if (item == null) {
+    onClickImage.selectedImage(position, false)
+   } else {
+    val popMenu = PopupMenu(context, holder.image)
+    popMenu.inflate(R.menu.menu_image)
+    popMenu.setOnMenuItemClickListener {
+     when (it.itemId) {
+      R.id.menu_update -> onClickImage.selectedImage(position, false)
+      R.id.menu_delete -> onClickImage.selectedImage(position, true)
+     }
+     false
+    }
+    popMenu.show()
+   }
+  }
  }
 
  override fun getItemCount(): Int = images.size
