@@ -12,6 +12,7 @@ data class Product(
  var price: Double,
  var type: String,
  var datePosted: Date,
+ var dateUpdated: Date,
  var userOwner: String,
  var images: MutableList<String>,
  var categories: MutableList<Category>,
