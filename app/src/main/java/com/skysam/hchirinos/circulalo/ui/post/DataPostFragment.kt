@@ -14,7 +14,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.skysam.hchirinos.circulalo.R
+import com.skysam.hchirinos.circulalo.common.Permission
 import com.skysam.hchirinos.circulalo.common.Utils
 import com.skysam.hchirinos.circulalo.dataClass.Category
 import com.skysam.hchirinos.circulalo.dataClass.Post
@@ -36,10 +38,12 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
     private val images = mutableListOf<String?>()
     private var positionImage = 0
 
-
-    private val requestIntentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            showImage(result.data!!)
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        if (isGranted) {
+            findNavController().navigate(R.id.DataPostToCamera)
+        } else {
+            Snackbar.make(binding.root, getString(R.string.error_permission_read), Snackbar.LENGTH_SHORT)
+                .setAnchorView(R.id.btn_next).show()
         }
     }
 
@@ -78,6 +82,13 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
         binding.etDescription.doAfterTextChanged { enableButtonSave() }
         binding.etQuantity.doAfterTextChanged { enableButtonSave() }
 
+        binding.fab.setOnClickListener {
+            if (Permission.checkPermissionCamera()) {
+                findNavController().navigate(R.id.DataPostToCamera)
+            } else {
+                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            }
+        }
         binding.btnNext.setOnClickListener { sendData() }
         binding.btnBack.setOnClickListener {
             val exitDialog = ExitDialog(this)
@@ -155,8 +166,7 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
     override fun selectedImage(position: Int, remove: Boolean) {
         positionImage = position
         if (!remove) {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            requestIntentLauncher.launch(intent)
+
         } else {
             imageAdapter.notifyItemRemoved(position)
             images.removeAt(position)

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/dataPostToPostFragment"
             app:destination="@id/PostFragment" />
+        <action
+            android:id="@+id/DataPostToCamera"
+            app:destination="@id/CameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/PostFragment"
@@ -19,6 +22,14 @@
         tools:layout="@layout/fragment_confirm_post" >
         <action
             android:id="@+id/postFragmentToDataPost"
+            app:destination="@id/DataPost" />
+    </fragment>
+    <fragment
+        android:id="@+id/CameraFragment"
+        android:name="com.skysam.hchirinos.circulalo.ui.post.CameraFragment"
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/CameraToDataPost"
             app:destination="@id/DataPost" />
     </fragment>
 </navigation>

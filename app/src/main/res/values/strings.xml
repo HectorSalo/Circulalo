@@ -35,6 +35,7 @@
     <string name="text_quantity">Cantidad disponible</string>
     <string name="text_update_image">Cambiar imagen</string>
     <string name="text_remove_image">Quitar imagen</string>
+    <string name="text_take_photo">Tomar foto</string>
 
     <!-- Notification Preferences -->
     <string name="notification_key">notification</string>
@@ -67,4 +68,6 @@
     <string name="cat_carousel_image_8_content_desc" translatable="false">Poke bowls</string>
     <string name="cat_carousel_image_9_content_desc" translatable="false">Bento box</string>
     <string name="cat_carousel_image_10_content_desc" translatable="false">White metal patio chairs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,8 +1,7 @@
 package com.skysam.hchirinos.circulalo.common
 
-import android.app.Activity
+import android.Manifest
 import android.content.pm.PackageManager
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 
 /**
@@ -10,8 +9,13 @@ import androidx.core.content.ContextCompat
  */
 
 object Permission {
- fun checkPermission(): Boolean {
-  val result = ContextCompat.checkSelfPermission(Circulalo.Circulalo.getContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+ fun checkPermissionReadStorage(): Boolean {
+  val result = ContextCompat.checkSelfPermission(Circulalo.Circulalo.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+  return result == PackageManager.PERMISSION_GRANTED
+ }
+
+ fun checkPermissionCamera(): Boolean {
+  val result = ContextCompat.checkSelfPermission(Circulalo.Circulalo.getContext(), Manifest.permission.CAMERA)
   return result == PackageManager.PERMISSION_GRANTED
  }
 }

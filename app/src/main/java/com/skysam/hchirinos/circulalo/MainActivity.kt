@@ -1,20 +1,12 @@
 package com.skysam.hchirinos.circulalo
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.TypedValue
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.skysam.hchirinos.circulalo.common.Permission
@@ -35,12 +27,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val request = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,24 +34,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-        navView.setOnItemSelectedListener {
-            if (it.itemId == R.id.navigation_post) {
-                if (Permission.checkPermission()) {
-                    startActivity(Intent(this, PostActivity::class.java))
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requestPermissionLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
-                    } else {
-                        requestPermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                    }
-                }
-            }
-            false
-        }
 
-
-        /*binding.fab.setOnClickListener {
-            if (Permission.checkPermission()) {
+        binding.fab.setOnClickListener {
+            if (Permission.checkPermissionReadStorage()) {
                 startActivity(Intent(this, PostActivity::class.java))
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -74,8 +45,7 @@ class MainActivity : AppCompatActivity() {
                     requestPermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
             }
-            //request.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-        }*/
+        }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
