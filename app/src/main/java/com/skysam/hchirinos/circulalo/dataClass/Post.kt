@@ -11,11 +11,11 @@ data class Post(
  var name: String,
  var description: String,
  var price: Double,
- var type: String,
+ var quantity: Double,
  var datePosted: Date,
  var dateUpdated: Date,
  var userOwner: String,
- var images: MutableList<String>,
+ var images: MutableList<String?>,
  var categories: MutableList<Category>,
  var isActive: Boolean
  )

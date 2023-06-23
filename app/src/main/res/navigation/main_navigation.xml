@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_post"
-        android:name="com.skysam.hchirinos.circulalo.ui.post.PostFragment"
+        android:name="com.skysam.hchirinos.circulalo.ui.post.ConfirmPostFragment"
         android:label="@string/title_post"
-        tools:layout="@layout/fragment_post" />
+        tools:layout="@layout/fragment_confirm_post" />
 
     <fragment
         android:id="@+id/navigation_notifications"

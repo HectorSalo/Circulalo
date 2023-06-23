@@ -34,17 +34,6 @@
             app:labelVisibilityMode="selected"
             app:menu="@menu/bottom_nav_menu"/>
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_add_post_24"
-            app:layout_anchor="@id/nav_view"
-            app:layout_anchorGravity="center"
-            android:contentDescription="@string/title_post" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

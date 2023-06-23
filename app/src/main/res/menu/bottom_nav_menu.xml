@@ -13,7 +13,8 @@
         android:visible="false"/>
 
     <item
-        android:id="@+id/navigation_profil"
+        android:id="@+id/navigation_post"
+        android:icon="@drawable/ic_add_post_24"
         android:title="" />
 
     <item

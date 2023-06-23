@@ -2,7 +2,6 @@ package com.skysam.hchirinos.circulalo.ui.post
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -13,24 +12,28 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.skysam.hchirinos.circulalo.R
 import com.skysam.hchirinos.circulalo.common.Utils
 import com.skysam.hchirinos.circulalo.dataClass.Category
+import com.skysam.hchirinos.circulalo.dataClass.Post
 import com.skysam.hchirinos.circulalo.databinding.FragmentDataPostBinding
 import com.skysam.hchirinos.circulalo.ui.common.ExitDialog
 import com.skysam.hchirinos.circulalo.ui.common.OnClickExit
+import java.util.Date
 import java.util.Locale
 
 class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage, OnClickExit {
 
     private var _binding: FragmentDataPostBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: PostViewModel by activityViewModels()
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var imageAdapter: ImageAdapter
     private val categories = mutableListOf<Category>()
     private val categoriesSelected = mutableListOf<Category>()
-    private val images = mutableListOf<Bitmap?>()
+    private val images = mutableListOf<String?>()
     private var positionImage = 0
 
 
@@ -75,13 +78,11 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
         binding.etDescription.doAfterTextChanged { enableButtonSave() }
         binding.etQuantity.doAfterTextChanged { enableButtonSave() }
 
-        binding.btnNext.setOnClickListener { findNavController().navigate(R.id.action_FirstFragment_to_postFragment) }
+        binding.btnNext.setOnClickListener { sendData() }
         binding.btnBack.setOnClickListener {
             val exitDialog = ExitDialog(this)
             exitDialog.show(requireActivity().supportFragmentManager, tag)
         }
-        binding.btnNext.isEnabled = true
-
     }
 
     private fun enableButtonSave() {
@@ -105,7 +106,7 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
             binding.btnNext.isEnabled = false
             return
         }
-        if (images.size < 2) {
+        if (images.size < 3) {
             binding.btnNext.isEnabled = false
             return
         }
@@ -113,18 +114,32 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
         Utils.close(binding.root)
     }
 
-    private fun showImage(it: Intent) {
-        val sizeImagePreview = resources.getDimensionPixelSize(R.dimen.size_image_item)
-        val bitmap = Utils.reduceBitmap(it.dataString, sizeImagePreview, sizeImagePreview)
+    private fun sendData() {
+        val newPost = Post(
+            "",
+            binding.etName.text.toString(),
+            binding.etDescription.text.toString(),
+            Utils.convertStringToDouble(binding.etPrice.text.toString()),
+            Utils.convertStringToDouble(binding.etQuantity.text.toString()),
+            Date(),
+            Date(),
+            "",
+            images,
+            categoriesSelected,
+            true
+        )
+        viewModel.confirmPost(newPost)
+        requireActivity().finish()
+        //findNavController().navigate(R.id.dataPostToPostFragment)
+    }
 
-        if (bitmap != null) {
-            images[positionImage] = bitmap
-            if (images.size < 8) {
-                images.add(null)
-            }
-            imageAdapter.notifyItemChanged(positionImage)
-            binding.rvImages.scrollToPosition(positionImage + 1)
+    private fun showImage(it: Intent) {
+        images[positionImage] = it.dataString
+        if (images.size < 8) {
+            images.add(null)
         }
+        imageAdapter.notifyItemChanged(positionImage)
+        binding.rvImages.scrollToPosition(positionImage + 1)
     }
 
     override fun onDestroyView() {

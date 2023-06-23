@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.carousel.CarouselLayoutManager
-import com.skysam.hchirinos.circulalo.databinding.FragmentPostBinding
+import com.skysam.hchirinos.circulalo.databinding.FragmentConfirmPostBinding
 
-class PostFragment : Fragment() {
+class ConfirmPostFragment : Fragment() {
 
-    private var _binding: FragmentPostBinding? = null
+    private var _binding: FragmentConfirmPostBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,21 +18,21 @@ class PostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPostBinding.inflate(inflater, container, false)
+        _binding = FragmentConfirmPostBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = CarouselData.createItems()
+        /*val list = CarouselData.createItems()
         val adapterK = CarouselAdapter(list)
         val carouselLayoutManager = CarouselLayoutManager()
         binding.rvImages.apply {
             layoutManager = carouselLayoutManager
             adapter = adapterK
             isNestedScrollingEnabled = false
-        }
+        }*/
     }
 
     override fun onDestroyView() {

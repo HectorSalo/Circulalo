@@ -3,32 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/DataPost">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/DataPost"
         android:name="com.skysam.hchirinos.circulalo.ui.post.DataPostFragment"
         tools:layout="@layout/fragment_data_post">
-
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_postFragment"
-            app:destination="@id/postFragment" />
+            android:id="@+id/dataPostToPostFragment"
+            app:destination="@id/PostFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.skysam.hchirinos.circulalo.ui.post.SecondFragment"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/PostFragment"
+        android:name="com.skysam.hchirinos.circulalo.ui.post.ConfirmPostFragment"
+        tools:layout="@layout/fragment_confirm_post" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/postFragmentToDataPost"
+            app:destination="@id/DataPost" />
     </fragment>
-    <fragment
-        android:id="@+id/postFragment"
-        android:name="com.skysam.hchirinos.circulalo.ui.post.PostFragment"
-        android:label="fragment_post"
-        tools:layout="@layout/fragment_post" />
 </navigation>
