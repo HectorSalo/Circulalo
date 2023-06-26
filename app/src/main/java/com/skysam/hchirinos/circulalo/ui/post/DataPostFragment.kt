@@ -1,9 +1,8 @@
 package com.skysam.hchirinos.circulalo.ui.post
 
-import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -14,6 +13,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.skysam.hchirinos.circulalo.R
 import com.skysam.hchirinos.circulalo.common.Permission
@@ -35,12 +35,13 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
     private lateinit var imageAdapter: ImageAdapter
     private val categories = mutableListOf<Category>()
     private val categoriesSelected = mutableListOf<Category>()
-    private val images = mutableListOf<String?>()
+    private val images = mutableListOf<Bitmap?>()
     private var positionImage = 0
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
-            findNavController().navigate(R.id.DataPostToCamera)
+            val cameraDialog = CameraDialog()
+            cameraDialog.show(requireActivity().supportFragmentManager, tag)
         } else {
             Snackbar.make(binding.root, getString(R.string.error_permission_read), Snackbar.LENGTH_SHORT)
                 .setAnchorView(R.id.btn_next).show()
@@ -82,17 +83,30 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
         binding.etDescription.doAfterTextChanged { enableButtonSave() }
         binding.etQuantity.doAfterTextChanged { enableButtonSave() }
 
-        binding.fab.setOnClickListener {
-            if (Permission.checkPermissionCamera()) {
-                findNavController().navigate(R.id.DataPostToCamera)
-            } else {
-                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
-            }
-        }
         binding.btnNext.setOnClickListener { sendData() }
         binding.btnBack.setOnClickListener {
             val exitDialog = ExitDialog(this)
             exitDialog.show(requireActivity().supportFragmentManager, tag)
+        }
+
+        loadViewModels()
+    }
+
+    private fun loadViewModels() {
+        viewModel.image.observe(viewLifecycleOwner) {
+            if (_binding != null) {
+                if (it != null) {
+                    val sizeImagePreview = resources.getDimensionPixelSize(R.dimen.size_image_item)
+                    showImage(Utils.reduceBitmap(it.dataString, sizeImagePreview, sizeImagePreview))
+                }
+            }
+        }
+        viewModel.photo.observe(viewLifecycleOwner) {
+            if (_binding != null) {
+                if (it != null) {
+                    showImage(it)
+                }
+            }
         }
     }
 
@@ -135,17 +149,16 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
             Date(),
             Date(),
             "",
-            images,
+            mutableListOf(),
             categoriesSelected,
             true
         )
         viewModel.confirmPost(newPost)
         requireActivity().finish()
-        //findNavController().navigate(R.id.dataPostToPostFragment)
     }
 
-    private fun showImage(it: Intent) {
-        images[positionImage] = it.dataString
+    private fun showImage(it: Bitmap?) {
+        images[positionImage] = it
         if (images.size < 8) {
             images.add(null)
         }
@@ -166,7 +179,12 @@ class DataPostFragment : Fragment(), TextWatcher, OnClickCategory, OnClickImage,
     override fun selectedImage(position: Int, remove: Boolean) {
         positionImage = position
         if (!remove) {
-
+            if (Permission.checkPermissionCamera()) {
+                val cameraDialog = CameraDialog()
+                cameraDialog.show(requireActivity().supportFragmentManager, tag)
+            } else {
+                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            }
         } else {
             imageAdapter.notifyItemRemoved(position)
             images.removeAt(position)

@@ -1,6 +1,7 @@
 package com.skysam.hchirinos.circulalo.ui.post
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.skysam.hchirinos.circulalo.R
  * Created by Hector Chirinos on 18/06/2023.
  */
 
-class ImageAdapter(private val images: MutableList<String?>, private val onClickImage: OnClickImage):
+class ImageAdapter(private val images: MutableList<Bitmap?>, private val onClickImage: OnClickImage):
  RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
  private lateinit var context: Context
 

@@ -1,6 +1,7 @@
 package com.skysam.hchirinos.circulalo.ui.post
 
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,10 @@ class PostViewModel : ViewModel() {
         value = null
     }
     val image: LiveData<Intent?> = _image
+
+    val photo: MutableLiveData<Bitmap?> by lazy {
+        MutableLiveData<Bitmap?>()
+    }
 
     fun confirmPost(post: Post) {
         _post.value = post
